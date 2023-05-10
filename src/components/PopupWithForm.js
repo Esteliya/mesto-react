@@ -2,7 +2,7 @@ function PopupWithForm (props) {
   const { name, title, btnText, children } = props;
 
       return (
-    <div className='popup popup_open'>
+    <div className='popup'>
      <div className="popup__container">
      <h2 className="edit-form__title">{title}</h2>
       <form name={name} noValidate method="post" className={`edit-form edit-form-${name}`}>
