@@ -2,20 +2,21 @@ import avatar from '../images/avatar.jpg';
 //import Button from './Button';
 //import App from './App';
 
-function Main() {
+function Main(/* {onEditProfile} */) {
     
 
     const handleEditAvatarClick = () => {
         console.log('Редактируем аватар');
-        //document.querySelector('.profile-popup').classList.add('.popup_open');
+        document.querySelector('.profile-popup').classList.add('popup_open');
     } 
-
     const handleEditProfileClick = () => {
         console.log('Редактируем профиль');
+        document.querySelector('.add-avatar-popup').classList.add('popup_open');
     }
 
     const handleAddPlaceClick = () => {
         console.log('Добавляем новую карточку');
+        document.querySelector('.add-card-popup').classList.add('popup_open');
     }
 
 

@@ -21,4 +21,4 @@ https://facebook.github.io/create-react-app/docs/running-tests - для полу
 https://facebook.github.io/create-react-app/docs/deployment - для получения дополнительной информации
 ______________________
 **Проект на GitHub**
-https://нужная ссылка
+https://esteliya.github.io/mesto-react/

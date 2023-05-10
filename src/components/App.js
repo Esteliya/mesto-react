@@ -1,14 +1,35 @@
-import '../App.css';
+/* import '../App.css'; */
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
+import PopupWithForm from './PopupWithForm';
 
 function App() {
+
+/* const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+
+function handleEditProfileClick() {
+  setIsEditProfilePopupOpen(true);
+};
+
+function closeAllPopups() {
+
+} */
+
   return (
     <div className="page">
   <Header/>
   <Main />
   <Footer />
+
+  <PopupWithForm name = 'profile' title = 'Редактировать профиль' btnText = 'Сохранить'>
+        <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя"
+          className="edit-form__personalia" />
+        <span className="firstname-error edit-form__personalia-error"/>
+        <input type="text" id="profession" required minLength="2" maxLength="200" name="about" placeholder="О себе"
+          className="edit-form__personalia" />
+        <span className="profession-error edit-form__personalia-error"/>
+  </ PopupWithForm>
  
   <div className="popup profile-popup">
     <div className="popup__container">
