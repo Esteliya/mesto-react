@@ -1,28 +1,45 @@
 /* import '../App.css'; */
+import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
 
 function App() {
+//редактировать профиль
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  };
+  
+//добавить карточку
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
-/* const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  };
 
-function handleEditProfileClick() {
-  setIsEditProfilePopupOpen(true);
-};
+  //редактировать профиль
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
 
-function closeAllPopups() {
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  };
 
-} */
 
   return (
     <div className="page">
   <Header/>
-  <Main />
+  <Main 
+  onEditProfile = {handleEditProfileClick}
+  onAddPlace = {handleAddPlaceClick}
+  onEditAvatar = {handleEditAvatarClick}
+  />
   <Footer />
 
-  <PopupWithForm name = 'profile' title = 'Редактировать профиль' btnText = 'Сохранить'>
+  <PopupWithForm name = 'profile' title = 'Редактировать профиль' btnText = 'Сохранить' isOpen = {isEditProfilePopupOpen}>
         <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя"
           className="edit-form__personalia" />
         <span className="firstname-error edit-form__personalia-error"/>
@@ -31,7 +48,7 @@ function closeAllPopups() {
         <span className="profession-error edit-form__personalia-error"/>
   </ PopupWithForm>
  
-  <PopupWithForm name = 'add-card' title = 'Новое место' btnText = 'Создать'>
+  <PopupWithForm name = 'add-card' title = 'Новое место' btnText = 'Создать' isOpen = {isAddPlacePopupOpen}>
         <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название"
           className="edit-form__personalia" />
         <span className="name-card-error edit-form__personalia-error" />
@@ -40,7 +57,7 @@ function closeAllPopups() {
         <span className="images-error edit-form__personalia-error" />
   </ PopupWithForm>
  
-  <PopupWithForm name = 'avatar' title = 'Обновить аватар' btnText = 'Создать'>
+  <PopupWithForm name = 'avatar' title = 'Обновить аватар' btnText = 'Создать' isOpen = {isEditAvatarPopupOpen}>
         <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку"
           className="edit-form__personalia" />
         <span className="avatar-error edit-form__personalia-error" />
@@ -48,18 +65,7 @@ function closeAllPopups() {
 
   <PopupWithForm name = 'delete-card' title = 'Вы уверены?' btnText = 'Да' />
   
-  <div className="popup popup_darck zoom-img-popup">
-    <div className="popup__card">
-      <div className="popup__user-photo">
-        <img className="popup__photo" alt="#" src="#" />
-        <button type="button" aria-label="Закрыть." className="popup__close-button" id="close-img-card"></button>
-        <h2 className="popup__photo-title">Текст картинки</h2>
-      </div>
-    </div>
-  </div>
- 
-
-  
+  <ImagePopup />
 
 </div>
   );
