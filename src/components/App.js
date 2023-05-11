@@ -27,6 +27,12 @@ function App() {
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   };
+  //закрываем попапы 
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
 
 
   return (
@@ -39,7 +45,7 @@ function App() {
   />
   <Footer />
 
-  <PopupWithForm name = 'profile' title = 'Редактировать профиль' btnText = 'Сохранить' isOpen = {isEditProfilePopupOpen}>
+  <PopupWithForm name = 'profile' title = 'Редактировать профиль' btnText = 'Сохранить' isOpen = {isEditProfilePopupOpen} onClose = {closeAllPopups}>
         <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя"
           className="edit-form__personalia" />
         <span className="firstname-error edit-form__personalia-error"/>
@@ -48,7 +54,7 @@ function App() {
         <span className="profession-error edit-form__personalia-error"/>
   </ PopupWithForm>
  
-  <PopupWithForm name = 'add-card' title = 'Новое место' btnText = 'Создать' isOpen = {isAddPlacePopupOpen}>
+  <PopupWithForm name = 'add-card' title = 'Новое место' btnText = 'Создать' isOpen = {isAddPlacePopupOpen} onClose = {closeAllPopups}>
         <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название"
           className="edit-form__personalia" />
         <span className="name-card-error edit-form__personalia-error" />
@@ -57,7 +63,7 @@ function App() {
         <span className="images-error edit-form__personalia-error" />
   </ PopupWithForm>
  
-  <PopupWithForm name = 'avatar' title = 'Обновить аватар' btnText = 'Создать' isOpen = {isEditAvatarPopupOpen}>
+  <PopupWithForm name = 'avatar' title = 'Обновить аватар' btnText = 'Создать' isOpen = {isEditAvatarPopupOpen} onClose = {closeAllPopups}>
         <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку"
           className="edit-form__personalia" />
         <span className="avatar-error edit-form__personalia-error" />

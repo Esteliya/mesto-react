@@ -1,5 +1,5 @@
 function PopupWithForm (props) {
-  const { name, title, btnText, children, isOpen } = props;
+  const { name, title, btnText, children, isOpen, onClose } = props;
 
   const popupClass = isOpen ? ('popup popup_open') : ('popup');
 
@@ -12,7 +12,7 @@ function PopupWithForm (props) {
 
         <button type="submit" className="popup__save-button">{btnText}</button>
       </form>
-      <button type="button" aria-label="Закрыть." className="popup__close-button"></button>
+      <button type="button" aria-label="Закрыть." className="popup__close-button" onClick={onClose}></button>
     </div>
   </div>
     )
