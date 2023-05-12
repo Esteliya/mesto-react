@@ -5,7 +5,6 @@ import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import api from '../utils/Api';
 
 function App() {
 //редактировать профиль
