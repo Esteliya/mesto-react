@@ -1,5 +1,6 @@
 import React from 'react';
 import api from '../utils/Api';
+import Card from './Card.js';
 //import avatar from '../images/avatar.jpg';
 //import Button from './Button';
 //import App from './App';
@@ -8,9 +9,10 @@ function Main(props) {
     const { onEditProfile, onAddPlace, onEditAvatar } = props;
 
     //добавляем переменные состояния 
-    const [userName, setUserName] = React.useState("");
-    const [userDescription, setUserDescription] = React.useState("");
-    const [userAvatar, setUserAvatar] = React.useState("");
+    const [userName, setUserName] = React.useState("");//имя профиля 
+    const [userDescription, setUserDescription] = React.useState("");//о пользователе
+    const [userAvatar, setUserAvatar] = React.useState("");//аватарка
+    const [cards, setCards] = React.useState([]);///карточки
 
     /*  const handleEditAvatarClick = () => {
          console.log('Редактируем аватар');
@@ -26,21 +28,22 @@ function Main(props) {
          document.querySelector('.add-card-popup').classList.add('popup_open');
      } */
 
-     React.useEffect (() => {
+    React.useEffect(() => {
         //получаем одновременно данные сервера
         Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользователя и массив карточек
-        .then(([userData, cardsData]) => {
-            //выводим на страницу данные профиля
-            setUserName(userData.name);
-            setUserDescription(userData.about);
-            setUserAvatar(userData.avatar);//заправшиваем картинку с сервера
-            console.log(cardsData);
-            //defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера
-        })
-        .catch((err) => {
-            console.error(`Ошибка: ${err}`);
-        });
-     }, []);
+            .then(([userData, cardsData]) => {
+                //выводим на страницу данные профиля
+                setUserName(userData.name);
+                setUserDescription(userData.about);
+                setUserAvatar(userData.avatar);//заправшиваем картинку с сервера
+                console.log(cardsData);
+                setCards(cardsData);
+                //defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера
+            })
+            .catch((err) => {
+                console.error(`Ошибка: ${err}`);
+            });
+    }, []);
 
     return (
         <main>
@@ -77,28 +80,12 @@ function Main(props) {
             <section
                 aria-label="Фотографии пользователя"
                 className="cards">
-
-                <template id="templite-card">
-                    <article className="card">
-                        <div className="card__image"></div>
-                        <div className="card__name">
-                            <h2 className="card__title">Заголовок</h2>
-                            <div className="card__like">
-                                <button
-                                    type="button"
-                                    aria-label="Мне нравится."
-                                    className="card__like-button button-like">
-                                </button>
-                                <span className="card__like-counter">0</span>
-                            </div>
-                        </div>
-                        <button
-                            type="button"
-                            aria-label="Удалить."
-                            className="button-remove">
-                        </button>
-                    </article>
-                </template>
+                {cards.map((card) => {
+                    return (
+                    <Card card={card} key={card._id} />
+                    //console.log(card)
+                    )
+                })}
             </section>
         </main>
     )
