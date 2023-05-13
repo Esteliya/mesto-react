@@ -19,7 +19,7 @@ function Main(props) {
                 setUserName(userData.name);
                 setUserDescription(userData.about);
                 setUserAvatar(userData.avatar);//заправшиваем картинку с сервера
-                console.log(cardsData);
+                //console.log(cardsData);
                 setCards(cardsData);
             })
             .catch((err) => {
