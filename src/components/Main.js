@@ -1,32 +1,15 @@
 import React from 'react';
 import api from '../utils/Api';
 import Card from './Card.js';
-//import avatar from '../images/avatar.jpg';
-//import Button from './Button';
-//import App from './App';
 
 function Main(props) {
-    const { onEditProfile, onAddPlace, onEditAvatar } = props;
+    const { onEditProfile, onAddPlace, onEditAvatar, onCardClick } = props;
 
     //добавляем переменные состояния 
     const [userName, setUserName] = React.useState("");//имя профиля 
     const [userDescription, setUserDescription] = React.useState("");//о пользователе
     const [userAvatar, setUserAvatar] = React.useState("");//аватарка
     const [cards, setCards] = React.useState([]);///карточки
-
-    /*  const handleEditAvatarClick = () => {
-         console.log('Редактируем аватар');
-         document.querySelector('.profile-popup').classList.add('popup_open');
-     } 
-     const handleEditProfileClick = () => {
-         console.log('Редактируем профиль');
-         document.querySelector('.add-avatar-popup').classList.add('popup_open');
-     }
- 
-     const handleAddPlaceClick = () => {
-         console.log('Добавляем новую карточку');
-         document.querySelector('.add-card-popup').classList.add('popup_open');
-     } */
 
     React.useEffect(() => {
         //получаем одновременно данные сервера
@@ -36,9 +19,8 @@ function Main(props) {
                 setUserName(userData.name);
                 setUserDescription(userData.about);
                 setUserAvatar(userData.avatar);//заправшиваем картинку с сервера
-                console.log(cardsData);
+                //console.log(cardsData);
                 setCards(cardsData);
-                //defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера
             })
             .catch((err) => {
                 console.error(`Ошибка: ${err}`);
@@ -82,7 +64,7 @@ function Main(props) {
                 className="cards">
                 {cards.map((card) => {
                     return (
-                    <Card card={card} key={card._id} />
+                    <Card card={card} key={card._id} onCardClick={onCardClick}/>
                     //console.log(card)
                     )
                 })}

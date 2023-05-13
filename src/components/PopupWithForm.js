@@ -9,10 +9,9 @@ function PopupWithForm (props) {
      <h2 className="edit-form__title">{title}</h2>
       <form name={name} noValidate method="post" className={`edit-form edit-form-${name}`}>
         {children}
-
         <button type="submit" className="popup__save-button">{btnText}</button>
       </form>
-      <button type="button" aria-label="Закрыть." className="popup__close-button" onClick={onClose}></button>
+      <button type="button" aria-label="Закрыть." className="popup__close-button" onClick={onClose} />
     </div>
   </div>
     )

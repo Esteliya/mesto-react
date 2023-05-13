@@ -27,11 +27,20 @@ function App() {
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   };
+
+    //открываем zoom-попап 
+    const [selectedCard, setSelectedCard] = React.useState({});
+
+    function handleCardClick (card) {
+      setSelectedCard(card);
+    }
+
   //закрываем попапы по крестику
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard({});
   }
 
 
@@ -42,36 +51,32 @@ function App() {
   onEditProfile = {handleEditProfileClick}
   onAddPlace = {handleAddPlaceClick}
   onEditAvatar = {handleEditAvatarClick}
+  onCardClick = {handleCardClick}
   />
   <Footer />
 
   <PopupWithForm name = 'profile' title = 'Редактировать профиль' btnText = 'Сохранить' isOpen = {isEditProfilePopupOpen} onClose = {closeAllPopups}>
-        <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя"
-          className="edit-form__personalia" />
+        <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя" className="edit-form__personalia" />
         <span className="firstname-error edit-form__personalia-error"/>
-        <input type="text" id="profession" required minLength="2" maxLength="200" name="about" placeholder="О себе"
-          className="edit-form__personalia" />
+        <input type="text" id="profession" required minLength="2" maxLength="200" name="about" placeholder="О себе" className="edit-form__personalia" />
         <span className="profession-error edit-form__personalia-error"/>
   </ PopupWithForm>
  
   <PopupWithForm name = 'add-card' title = 'Новое место' btnText = 'Создать' isOpen = {isAddPlacePopupOpen} onClose = {closeAllPopups}>
-        <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название"
-          className="edit-form__personalia" />
+        <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название" className="edit-form__personalia" />
         <span className="name-card-error edit-form__personalia-error" />
-        <input type="url" required id="images" name="link" placeholder="Ссылка на картинку"
-          className="edit-form__personalia" />
+        <input type="url" required id="images" name="link" placeholder="Ссылка на картинку" className="edit-form__personalia" />
         <span className="images-error edit-form__personalia-error" />
   </ PopupWithForm>
  
   <PopupWithForm name = 'avatar' title = 'Обновить аватар' btnText = 'Создать' isOpen = {isEditAvatarPopupOpen} onClose = {closeAllPopups}>
-        <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку"
-          className="edit-form__personalia" />
+        <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку" className="edit-form__personalia" />
         <span className="avatar-error edit-form__personalia-error" />
   </ PopupWithForm>
 
   <PopupWithForm name = 'delete-card' title = 'Вы уверены?' btnText = 'Да' />
   
-  <ImagePopup />
+  <ImagePopup card = {selectedCard} onClose = {closeAllPopups} />
 
 </div>
   );
