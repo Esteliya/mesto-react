@@ -1,100 +1,100 @@
-import { apiSetting}  from './customize.js';
+import { apiSetting } from './customize.js';
 
 class Api {
-  constructor (data) {
+  constructor(data) {
     this._url = data.url;//основная строка url из customize
     this._headers = data.headers;//заголовок fetch из customize
   }
-//проверяем ответ сервера
-  _checkResponse (res) {
+  //проверяем ответ сервера
+  _checkResponse(res) {
     if (res.ok) {//если все ок
       return res.json();//вернули данные (объект)
     } else {
       Promise.reject(res.status);//завершаем действия с ошибкой
     }
   }
-//запрашиваем данные
+
+  //запрос проверки ответа
+  _request(urlEndpoint, options) {
+    return fetch(`${this._url}${urlEndpoint}`, options)
+      .then(this._checkResponse)
+  }
+
+  //запрашиваем данные
   getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
+    return this._request('/users/me', {
       headers: this._headers,
     })
-    .then(this._checkResponse);
   }
 
   //отправляем данные пользователя
   patchUserInfo(data) {
-    return fetch(`${this._url}/users/me`, {
+    return this._request('/users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
-      }),
+      })
     })
-    .then(this._checkResponse);
   }
 
   //запрашиваем массив карточек с сервера
-  getArrCards () {
-    return fetch(`${this._url}/cards`, {
+  getArrCards() {
+    return this._request('/cards', {
       headers: this._headers,
     })
-    .then(this._checkResponse);
   }
 
   //создаем карточку пользователя -> отправляем данные на серввер
-  postUserCard (data) {//ждем объект
+  postUserCard(data) {//ждем объект
     //debugger;
-    return fetch(`${this._url}/cards`, {
+    return this._request('/cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(
         data,
-        )
+      )
     })
-    .then(this._checkResponse);
+      .then(this._checkResponse);
   }
 
- //удаляем карточку
- deleteCard (cardId) {
-  return fetch(`${this._url}/cards/${cardId}`, {
-    method: 'DELETE',
-    headers: this._headers,
-  })
-  .then(this._checkResponse);
- }
+  //удаляем карточку
+  deleteCard(cardId) {
+    return this._request(`/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+  }
 
- //отправляем аватарку на сервер
- patchAvatar(avatar) {
-  return fetch(`${this._url}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: this._headers,
-    body: JSON.stringify( avatar ),
-  })
-  .then(this._checkResponse);
-}
+  //отправляем аватарку на сервер
+  patchAvatar(avatar) {
+    return this._request('/users/me/avatar', {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(avatar),
+    })
+  }
 
-//добавляем лайк карточке
-putLike (cardId) {
-  return fetch(`${this._url}/cards/${cardId}/likes`, {
-    method: "PUT",
-    headers: this._headers,
-  })
-  .then(this._checkResponse);
-}
+  //добавляем лайк карточке
+  putLike(cardId) {
+    return this._request(`/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    })
+  }
 
-//удаляем лайк карточки
-deleteLike (cardId) {
-  return fetch(`${this._url}/cards/${cardId}/likes`, {
-    method: 'DELETE',
-    headers: this._headers,
-  })
-  .then(this._checkResponse);
-}
+  //удаляем лайк карточки
+  deleteLike(cardId) {
+    return this._request(`/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+  }
 }
 
 //экземпляр класса Api с данными
-const api = new Api (apiSetting);
+const api = new Api(apiSetting);
 //ЭКСПОРТ
 export default api;
 //export { Api };

@@ -1,7 +1,7 @@
 function Footer() {
     return (
         <footer className="footer">
-            <p className="author">&#169; 2020 Mesto Russia</p>
+            <p className="author">&#169; {new Date().getFullYear()} Mesto Russia</p>
         </footer>
     )
 }
