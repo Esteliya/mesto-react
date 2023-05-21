@@ -17,13 +17,27 @@ function App() {
       .then((userData) => {
         //выводим на страницу данные профиля
         setCurrentUser(userData);
-        //console.log(userData.name);
         console.log(userData);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
   }, []);
+
+    //контекст карточек
+    const [cards, setCards] = React.useState([]);
+
+    React.useEffect(() => {
+      api.getArrCards()
+        .then((cardsData) => {
+          //выводим на страницу карточки
+          setCards(cardsData);
+          console.log(cardsData);
+        })
+        .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+        });
+    }, []);
 
   //редактировать профиль
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -72,6 +86,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           currentUser = {currentUser}
+          cards = {cards}
         />
         <Footer />
 

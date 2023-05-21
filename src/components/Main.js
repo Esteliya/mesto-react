@@ -3,29 +3,25 @@ import api from '../utils/Api';
 import Card from './Card.js';
 
 function Main(props) {
-    const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, currentUser } = props;
+    const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, currentUser, cards } = props;
 
     //добавляем переменные состояния 
     //const [userName, setUserName] = React.useState("");//имя профиля 
     //const [userDescription, setUserDescription] = React.useState("");//о пользователе
     //const [userAvatar, setUserAvatar] = React.useState("");//аватарка
-    const [cards, setCards] = React.useState([]);///карточки
+    //const [cards, setCards] = React.useState([]);///карточки
 
-    React.useEffect(() => {
+    /* React.useEffect(() => {
         //получаем одновременно данные сервера
-        Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользователя и массив карточек
-            .then(([userData, cardsData]) => {
-                //выводим на страницу данные профиля
-                //setUserName(userData.name);
-                //setUserDescription(userData.about);
-                //setUserAvatar(userData.avatar);//заправшиваем картинку с сервера
+        Promise.all([api.getArrCards()])//данные пользователя и массив карточек
+            .then(([cardsData]) => {
                 //console.log(cardsData);
                 setCards(cardsData);
             })
             .catch((err) => {
                 console.error(`Ошибка: ${err}`);
             });
-    }, []);
+    }, []); */
 
     return (
         <main>
