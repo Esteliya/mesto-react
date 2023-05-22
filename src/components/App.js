@@ -5,6 +5,7 @@ import Footer from './Footer';
 import Main from './Main';
 import api from '../utils/Api';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from './ImagePopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
@@ -114,12 +115,14 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm name='profile' title='Редактировать профиль' btnText='Сохранить' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+{/*         <PopupWithForm name='profile' title='Редактировать профиль' btnText='Сохранить' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
           <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя" className="edit-form__personalia" />
           <span className="firstname-error edit-form__personalia-error" />
           <input type="text" id="profession" required minLength="2" maxLength="200" name="about" placeholder="О себе" className="edit-form__personalia" />
           <span className="profession-error edit-form__personalia-error" />
-        </ PopupWithForm>
+        </ PopupWithForm> */}
+
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} currentUser={currentUser}/>
 
         <PopupWithForm name='add-card' title='Новое место' btnText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название" className="edit-form__personalia" />
