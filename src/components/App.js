@@ -17,7 +17,7 @@ function App() {
       .then((userData) => {
         //выводим на страницу данные профиля
         setCurrentUser(userData);
-        console.log(userData);
+        //console.log(userData);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -32,12 +32,12 @@ function App() {
         .then((cardsData) => {
           //выводим на страницу карточки
           setCards(cardsData);
-          console.log(cardsData);
+          //console.log(cardsData);
         })
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
         });
-    }, []);
+    }, [cards]);
 
   //редактировать профиль
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -67,6 +67,39 @@ function App() {
     setSelectedCard(card);
   }
 
+  //ставим лайк 
+   function handleCardLike (card) {
+    //console.log('ставим лайк карточке');
+    //console.log(card);
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    if (!isLiked) {
+      api.putLike(card._id)
+      console.log('лайк');
+    } else {
+      api.deleteLike(card._id)
+      console.log('дизлайк');
+    }
+
+    /* if (!card.checkMyLiked()) {
+      api.putLike(data._id)
+        .then((res) => {
+          card.updateLikes(res);
+        })
+        .catch((error) => {
+          console.error(`Ошибка putLike: ${error}`)
+        })
+    } else {
+      api.deleteLike(data._id)
+        .then((res) => {
+          card.updateLikes(res);
+        })
+        .catch((error) => {
+          console.error(`Ошибка deleteLike: ${error}`)
+        })
+    } */
+    
+  }
+
   //закрываем попапы по крестику
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
@@ -87,6 +120,7 @@ function App() {
           onCardClick={handleCardClick}
           currentUser = {currentUser}
           cards = {cards}
+          onCardLike = {handleCardLike}
         />
         <Footer />
 
