@@ -3,7 +3,7 @@ import api from '../utils/Api';
 import Card from './Card.js';
 
 function Main(props) {
-    const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, currentUser, cards, onCardLike} = props;
+    const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, currentUser, cards, onCardLike, onCardDelete} = props;
 
     //добавляем переменные состояния 
     //const [userName, setUserName] = React.useState("");//имя профиля 
@@ -60,7 +60,7 @@ function Main(props) {
                 className="cards">
                 {cards.map((card) => {
                     return (
-                    <Card card={card} key={card._id} onCardClick={onCardClick} currentUser = {currentUser} onCardLike={onCardLike}/>
+                    <Card card={card} key={card._id} onCardClick={onCardClick} currentUser = {currentUser} onCardLike={onCardLike} onCardDelete={onCardDelete}/>
                     //console.log(card)
                     )
                 })}

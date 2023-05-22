@@ -24,20 +24,20 @@ function App() {
       });
   }, []);
 
-    //контекст карточек
-    const [cards, setCards] = React.useState([]);
+  //контекст карточек
+  const [cards, setCards] = React.useState([]);
 
-    React.useEffect(() => {
-      api.getArrCards()
-        .then((cardsData) => {
-          //выводим на страницу карточки
-          setCards(cardsData);
-          //console.log(cardsData);
-        })
-        .catch((err) => {
-          console.error(`Ошибка: ${err}`);
-        });
-    }, [cards]);
+  React.useEffect(() => {
+    api.getArrCards()
+      .then((cardsData) => {
+        //выводим на страницу карточки
+        setCards(cardsData);
+        //console.log(cardsData);
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+  }, [cards]);//обновляем при изменении в cards
 
   //редактировать профиль
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -68,7 +68,7 @@ function App() {
   }
 
   //ставим лайк 
-   function handleCardLike (card) {
+  function handleCardLike(card) {
     //console.log('ставим лайк карточке');
     //console.log(card);
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -79,25 +79,14 @@ function App() {
       api.deleteLike(card._id)
       console.log('дизлайк');
     }
+  }
 
-    /* if (!card.checkMyLiked()) {
-      api.putLike(data._id)
-        .then((res) => {
-          card.updateLikes(res);
-        })
-        .catch((error) => {
-          console.error(`Ошибка putLike: ${error}`)
-        })
-    } else {
-      api.deleteLike(data._id)
-        .then((res) => {
-          card.updateLikes(res);
-        })
-        .catch((error) => {
-          console.error(`Ошибка deleteLike: ${error}`)
-        })
-    } */
-    
+  //удаляем карточку
+  function handleCardDelete(card) {
+    //console.log('удаляем карточку');
+    //console.log(card);
+    api.deleteCard(card._id)
+    console.log(`удалили карточку ${card._id}`);
   }
 
   //закрываем попапы по крестику
@@ -118,9 +107,10 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          currentUser = {currentUser}
-          cards = {cards}
-          onCardLike = {handleCardLike}
+          currentUser={currentUser}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 
