@@ -18,7 +18,7 @@ function App() {
       .then((userData) => {
         //выводим на страницу данные профиля
         setCurrentUser(userData);
-        //console.log(userData);
+        console.log(userData);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -60,6 +60,17 @@ function App() {
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   };
+
+  function handleUpdateUser(userData) {
+    api.patchUserInfo(userData)
+    .then (() => {
+      setCurrentUser(userData);
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.error(`Ошибка: ${err}`);
+    });
+  }
 
   //открываем zoom-попап 
   const [selectedCard, setSelectedCard] = React.useState({});
@@ -122,7 +133,11 @@ function App() {
           <span className="profession-error edit-form__personalia-error" />
         </ PopupWithForm> */}
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} currentUser={currentUser} />
+        <EditProfilePopup 
+        isOpen={isEditProfilePopupOpen} 
+        onClose={closeAllPopups} 
+        currentUser={currentUser} 
+        onUpdateUser={handleUpdateUser}/>
 
         <PopupWithForm name='add-card' title='Новое место' btnText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название" className="edit-form__personalia" />
