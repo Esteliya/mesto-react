@@ -6,6 +6,7 @@ import Main from './Main';
 import api from '../utils/Api';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
@@ -18,7 +19,7 @@ function App() {
       .then((userData) => {
         //выводим на страницу данные профиля
         setCurrentUser(userData);
-        console.log(userData);
+        //console.log(userData);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -63,13 +64,13 @@ function App() {
 
   function handleUpdateUser(userData) {
     api.patchUserInfo(userData)
-    .then (() => {
-      setCurrentUser(userData);
-      closeAllPopups();
-    })
-    .catch((err) => {
-      console.error(`Ошибка: ${err}`);
-    });
+      .then(() => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
   }
 
   //открываем zoom-попап 
@@ -126,18 +127,23 @@ function App() {
         />
         <Footer />
 
-{/*         <PopupWithForm name='profile' title='Редактировать профиль' btnText='Сохранить' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+        {/*         <PopupWithForm name='profile' title='Редактировать профиль' btnText='Сохранить' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
           <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя" className="edit-form__personalia" />
           <span className="firstname-error edit-form__personalia-error" />
           <input type="text" id="profession" required minLength="2" maxLength="200" name="about" placeholder="О себе" className="edit-form__personalia" />
           <span className="profession-error edit-form__personalia-error" />
         </ PopupWithForm> */}
 
-        <EditProfilePopup 
-        isOpen={isEditProfilePopupOpen} 
-        onClose={closeAllPopups} 
-        currentUser={currentUser} 
-        onUpdateUser={handleUpdateUser}/>
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          currentUser={currentUser}
+          onUpdateUser={handleUpdateUser} />
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser} />
 
         <PopupWithForm name='add-card' title='Новое место' btnText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название" className="edit-form__personalia" />
@@ -146,10 +152,10 @@ function App() {
           <span className="images-error edit-form__personalia-error" />
         </ PopupWithForm>
 
-        <PopupWithForm name='avatar' title='Обновить аватар' btnText='Создать' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+        {/*         <PopupWithForm name='avatar' title='Обновить аватар' btnText='Создать' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
           <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку" className="edit-form__personalia" />
           <span className="avatar-error edit-form__personalia-error" />
-        </ PopupWithForm>
+        </ PopupWithForm> */}
 
         <PopupWithForm name='delete-card' title='Вы уверены?' btnText='Да' />
 
