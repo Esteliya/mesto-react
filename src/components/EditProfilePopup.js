@@ -8,6 +8,11 @@ function EditProfilePopup(props) {
     const [name, setName] = React.useState(currentUser.name);
     const [description, setDescription] = React.useState(currentUser.about);
     
+   //используем данные, полученные из api выше
+    React.useEffect(() => {
+        setName(currentUser.name);
+        setDescription(currentUser.about);
+      }, [currentUser]); 
 
     //обработчик поля имени
     function handleNameChange(evt) {
@@ -19,12 +24,34 @@ function EditProfilePopup(props) {
         setDescription(evt.target.value);
     }
 
-
-    return (
-        <PopupWithForm name='profile' title='Редактировать профиль' btnText='Сохранить' isOpen={isOpen} onClose={onClose}>
-            <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя" className="edit-form__personalia" value={name} onChange={handleNameChange}/>
+        return (
+        <PopupWithForm 
+        name='profile' 
+        title='Редактировать профиль' 
+        btnText='Сохранить' 
+        isOpen={isOpen} 
+        onClose={onClose}>
+            <input 
+            type="text" 
+            id="firstname" 
+            required 
+            minLength="2" maxLength="40" 
+            name="name" 
+            placeholder="Имя" 
+            className="edit-form__personalia" 
+            value={(name !== null && name !== undefined) ? name : ''} 
+            onChange={handleNameChange}/>
             <span className="firstname-error edit-form__personalia-error" />
-            <input type="text" id="profession" required minLength="2" maxLength="200" name="about" placeholder="О себе" className="edit-form__personalia" value={description} onChange={handleDescriptionChange}/>
+            <input 
+            type="text" 
+            id="profession" 
+            required 
+            minLength="2" maxLength="200" 
+            name="about" 
+            placeholder="О себе" 
+            className="edit-form__personalia" 
+            value={(description !== null && description !== undefined) ? description : ''} 
+            onChange={handleDescriptionChange}/>
             <span className="profession-error edit-form__personalia-error" />
         </PopupWithForm>
     )
