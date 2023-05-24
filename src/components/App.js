@@ -55,16 +55,28 @@ function App() {
     setIsAddPlacePopupOpen(true);
   };
 
-  //редактировать профиль
+  //редактировать аватар профиля
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   };
 
+  function handleUpdateAvatar(avatar) {
+    console.log(avatar);
+   api.patchAvatar(avatar)
+    .then((avatar) => {
+      setCurrentUser(avatar);
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.error(`Ошибка: ${err}`);
+    });
+  }
+
   function handleUpdateUser(userData) {
     api.patchUserInfo(userData)
-      .then(() => {
+      .then((userData) => {
         setCurrentUser(userData);
         closeAllPopups();
       })
@@ -86,11 +98,20 @@ function App() {
     //console.log(card);
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     if (!isLiked) {
-      api.putLike(card._id)
       console.log('лайк');
+      api.putLike(card._id)
+        //ловим вероятную ошибку
+        .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+        });
     } else {
-      api.deleteLike(card._id)
       console.log('дизлайк');
+      api.deleteLike(card._id)
+        //ловим вероятную ошибку
+        .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+        });
+
     }
   }
 
@@ -105,6 +126,7 @@ function App() {
   //закрываем попапы по крестику
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
+
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard({});
@@ -143,7 +165,7 @@ function App() {
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser} />
+          onUpdateAvatar={handleUpdateAvatar} />
 
         <PopupWithForm name='add-card' title='Новое место' btnText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название" className="edit-form__personalia" />
