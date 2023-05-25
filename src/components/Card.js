@@ -7,7 +7,7 @@ function Card(props) {
     }
 
     // Определяем, являемся ли мы владельцем текущей карточки
-    const isOwn = card.owner._id === currentUser._id;
+    const isOwner = card.owner._id === currentUser._id;
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     
@@ -17,7 +17,7 @@ function Card(props) {
     );
     //класс кнопки удаления
     const cardDeleteButtonClassName = (
-        `button-remove ${isOwn && ' button-remove_show'}`
+        `button-remove ${isOwner && ' button-remove_show'}`
     );
 
     //ставим лайк карточке 
@@ -30,10 +30,6 @@ function Card(props) {
     function handleDeleteClick() {
         onCardDelete(card);
       }
-    //РЕАЛИЗОВАТЬ УДАЛЕНИЕ КАРТОЧКИ!!!
-    // Далее в разметке используем переменную для условного рендеринга
-    //{ isOwn && <button className='button_del' onClick={handleDeleteClick} /> } удаление карточки - добавить функцию
-
 
 
     return (

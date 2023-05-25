@@ -7,6 +7,7 @@ import api from '../utils/Api';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
@@ -34,12 +35,34 @@ function App() {
       .then((cardsData) => {
         //выводим на страницу карточки
         setCards(cardsData);
-        //console.log(cardsData);
+        //console.log(cardsData);//массив объектов {likes: [], link: '', name: '', owner: {name: '', about: '', avatar: '', _id: '', cohort: ''}, _id: ''}
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
   }, [cards]);//обновляем при изменении в cards
+
+      //добавить карточку
+      const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+
+      function handleAddPlaceClick() {
+        setIsAddPlacePopupOpen(true);
+      };
+
+      function handleAddPlaceSubmit(place) {
+        console.log('функция работает')
+        //console.log(place);//все ок. Объект {name: '', link: ''}
+        api.postUserCard(place)
+        .then((newCard)=> {
+          console.log(newCard);
+          //setCards([newCard, ...cards])
+          closeAllPopups();
+        })
+/*         .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+        }); */
+      }
+  
 
   //редактировать профиль
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -48,12 +71,17 @@ function App() {
     setIsEditProfilePopupOpen(true);
   };
 
-  //добавить карточку
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  function handleUpdateUser(userData) {
+    api.patchUserInfo(userData)
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+  }
 
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
-  };
 
   //редактировать аватар профиля
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -64,20 +92,9 @@ function App() {
 
   function handleUpdateAvatar(avatar) {
     console.log(avatar);
-   api.patchAvatar(avatar)
-    .then((avatar) => {
-      setCurrentUser(avatar);
-      closeAllPopups();
-    })
-    .catch((err) => {
-      console.error(`Ошибка: ${err}`);
-    });
-  }
-
-  function handleUpdateUser(userData) {
-    api.patchUserInfo(userData)
-      .then((userData) => {
-        setCurrentUser(userData);
+    api.patchAvatar(avatar)
+      .then((avatar) => {
+        setCurrentUser(avatar);
         closeAllPopups();
       })
       .catch((err) => {
@@ -167,12 +184,17 @@ function App() {
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar} />
 
-        <PopupWithForm name='add-card' title='Новое место' btnText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups} 
+          onAddPlace={handleAddPlaceSubmit}/>
+
+        {/*         <PopupWithForm name='add-card' title='Новое место' btnText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название" className="edit-form__personalia" />
           <span className="name-card-error edit-form__personalia-error" />
           <input type="url" required id="images" name="link" placeholder="Ссылка на картинку" className="edit-form__personalia" />
           <span className="images-error edit-form__personalia-error" />
-        </ PopupWithForm>
+        </ PopupWithForm> */}
 
         {/*         <PopupWithForm name='avatar' title='Обновить аватар' btnText='Создать' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
           <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку" className="edit-form__personalia" />

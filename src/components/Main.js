@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../utils/Api';
+//import api from '../utils/Api';
 import Card from './Card.js';
 
 function Main(props) {
@@ -60,7 +60,13 @@ function Main(props) {
                 className="cards">
                 {cards.map((card) => {
                     return (
-                    <Card card={card} key={card._id} onCardClick={onCardClick} currentUser = {currentUser} onCardLike={onCardLike} onCardDelete={onCardDelete}/>
+                    <Card 
+                    card={card} 
+                    key={card._id} 
+                    onCardClick={onCardClick} 
+                    currentUser = {currentUser} 
+                    onCardLike={onCardLike} 
+                    onCardDelete={onCardDelete}/>
                     //console.log(card)
                     )
                 })}

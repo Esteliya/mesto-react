@@ -7,6 +7,8 @@ class Api {
   }
   //проверяем ответ сервера
   _checkResponse(res) {
+          //console.log(res);
+          //console.log(res.ok);
     if (res.ok) {//если все ок
       return res.json();//вернули данные (объект)
     } else {
@@ -56,7 +58,6 @@ class Api {
         data,
       )
     })
-      .then(this._checkResponse);
   }
 
   //удаляем карточку
