@@ -1,4 +1,3 @@
-/* import '../App.css'; */
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
@@ -35,12 +34,13 @@ function App() {
       .then((cardsData) => {
         //выводим на страницу карточки
         setCards(cardsData);
+        console.log('обновились данные');
         //console.log(cardsData);//массив объектов {likes: [], link: '', name: '', owner: {name: '', about: '', avatar: '', _id: '', cohort: ''}, _id: ''}
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
-  }, [cards]);//обновляем при изменении в cards
+  }, []);//обновляем при изменении в cards
 
   //добавить карточку
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -53,10 +53,12 @@ function App() {
     console.log('функция работает')
     //console.log(place);//все ок. Объект {name: '', link: ''}
     api.postUserCard(place)
+      //изменения карточек
       .then((newCard) => {
         console.log(newCard);
-        //setCards([newCard, ...cards])
+        setCards([newCard, ...cards])
       })
+      //если ошибка в запросе api
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       })
@@ -123,6 +125,9 @@ function App() {
     if (!isLiked) {
       console.log('лайк');
       api.putLike(card._id)
+      .then((newCard)=> {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
         //ловим вероятную ошибку
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -130,6 +135,9 @@ function App() {
     } else {
       console.log('дизлайк');
       api.deleteLike(card._id)
+      .then((newCard)=> {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
         //ловим вероятную ошибку
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -142,18 +150,19 @@ function App() {
     //console.log('удаляем карточку');
     //console.log(card);
     api.deleteCard(card._id)
+    .then(()=> {
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    })
     console.log(`удалили карточку ${card._id}`);
   }
 
   //закрываем попапы по крестику
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
-
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard({});
   }
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

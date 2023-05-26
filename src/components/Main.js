@@ -1,27 +1,9 @@
 import React from 'react';
-//import api from '../utils/Api';
 import Card from './Card.js';
 
 function Main(props) {
     const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, currentUser, cards, onCardLike, onCardDelete} = props;
 
-    //добавляем переменные состояния 
-    //const [userName, setUserName] = React.useState("");//имя профиля 
-    //const [userDescription, setUserDescription] = React.useState("");//о пользователе
-    //const [userAvatar, setUserAvatar] = React.useState("");//аватарка
-    //const [cards, setCards] = React.useState([]);///карточки
-
-    /* React.useEffect(() => {
-        //получаем одновременно данные сервера
-        Promise.all([api.getArrCards()])//данные пользователя и массив карточек
-            .then(([cardsData]) => {
-                //console.log(cardsData);
-                setCards(cardsData);
-            })
-            .catch((err) => {
-                console.error(`Ошибка: ${err}`);
-            });
-    }, []); */
 
     return (
         <main>

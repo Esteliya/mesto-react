@@ -7,18 +7,7 @@ function AddPlacePopup(props) {
     //рефы полей имени и ссылки 
     const name = React.useRef();
     const link = React.useRef();
-    /* const [name, setName] = React.useState('');
-    const [link, setLink] = React.useState(''); */
 
-/*     //обработчик поля имени
-    function handleNameChange(evt) {
-        setName(evt.target.value);
-    }
-
-    //обработчик поля ссылки на картинку
-    function handleLinkChange(evt) {
-        setLink(evt.target.value);
-    } */
 
     //отправка данных вверх
     function handleSubmit(evt) {
