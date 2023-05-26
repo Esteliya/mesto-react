@@ -34,8 +34,8 @@ function App() {
       .then((cardsData) => {
         //выводим на страницу карточки
         setCards(cardsData);
-        console.log('обновились данные');
-        console.log(cardsData);
+        //console.log('обновились данные');
+        //console.log(cardsData);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
