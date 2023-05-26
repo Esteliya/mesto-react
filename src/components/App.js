@@ -42,27 +42,29 @@ function App() {
       });
   }, [cards]);//обновляем при изменении в cards
 
-      //добавить карточку
-      const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  //добавить карточку
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
-      function handleAddPlaceClick() {
-        setIsAddPlacePopupOpen(true);
-      };
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  };
 
-      function handleAddPlaceSubmit(place) {
-        console.log('функция работает')
-        //console.log(place);//все ок. Объект {name: '', link: ''}
-        api.postUserCard(place)
-        .then((newCard)=> {
-          console.log(newCard);
-          //setCards([newCard, ...cards])
-          closeAllPopups();
-        })
-/*         .catch((err) => {
-          console.error(`Ошибка: ${err}`);
-        }); */
-      }
-  
+  function handleAddPlaceSubmit(place) {
+    console.log('функция работает')
+    //console.log(place);//все ок. Объект {name: '', link: ''}
+    api.postUserCard(place)
+      .then((newCard) => {
+        console.log(newCard);
+        //setCards([newCard, ...cards])
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        closeAllPopups();
+      })
+  }
+
 
   //редактировать профиль
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -75,11 +77,13 @@ function App() {
     api.patchUserInfo(userData)
       .then((userData) => {
         setCurrentUser(userData);
-        closeAllPopups();
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
-      });
+      })
+      .finally(() => {
+        closeAllPopups();
+      })
   }
 
 
@@ -95,11 +99,13 @@ function App() {
     api.patchAvatar(avatar)
       .then((avatar) => {
         setCurrentUser(avatar);
-        closeAllPopups();
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
-      });
+      })
+      .finally(() => {
+        closeAllPopups();
+      })
   }
 
   //открываем zoom-попап 
@@ -128,7 +134,6 @@ function App() {
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
         });
-
     }
   }
 
@@ -166,13 +171,6 @@ function App() {
         />
         <Footer />
 
-        {/*         <PopupWithForm name='profile' title='Редактировать профиль' btnText='Сохранить' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-          <input type="text" id="firstname" required minLength="2" maxLength="40" name="name" placeholder="Имя" className="edit-form__personalia" />
-          <span className="firstname-error edit-form__personalia-error" />
-          <input type="text" id="profession" required minLength="2" maxLength="200" name="about" placeholder="О себе" className="edit-form__personalia" />
-          <span className="profession-error edit-form__personalia-error" />
-        </ PopupWithForm> */}
-
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -186,20 +184,8 @@ function App() {
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups} 
-          onAddPlace={handleAddPlaceSubmit}/>
-
-        {/*         <PopupWithForm name='add-card' title='Новое место' btnText='Создать' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-          <input type="text" required minLength="2" maxLength="30" id="name-card" name="name" placeholder="Название" className="edit-form__personalia" />
-          <span className="name-card-error edit-form__personalia-error" />
-          <input type="url" required id="images" name="link" placeholder="Ссылка на картинку" className="edit-form__personalia" />
-          <span className="images-error edit-form__personalia-error" />
-        </ PopupWithForm> */}
-
-        {/*         <PopupWithForm name='avatar' title='Обновить аватар' btnText='Создать' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку" className="edit-form__personalia" />
-          <span className="avatar-error edit-form__personalia-error" />
-        </ PopupWithForm> */}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit} />
 
         <PopupWithForm name='delete-card' title='Вы уверены?' btnText='Да' />
 
