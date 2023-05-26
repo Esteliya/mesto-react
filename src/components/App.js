@@ -35,7 +35,7 @@ function App() {
         //выводим на страницу карточки
         setCards(cardsData);
         console.log('обновились данные');
-        //console.log(cardsData);//массив объектов {likes: [], link: '', name: '', owner: {name: '', about: '', avatar: '', _id: '', cohort: ''}, _id: ''}
+        console.log(cardsData);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
