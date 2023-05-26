@@ -57,14 +57,12 @@ function App() {
       .then((newCard) => {
         console.log(newCard);
         setCards([newCard, ...cards])
+        closeAllPopups();
       })
       //если ошибка в запросе api
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        closeAllPopups();
-      })
+      });
   }
 
 
@@ -79,13 +77,11 @@ function App() {
     api.patchUserInfo(userData)
       .then((userData) => {
         setCurrentUser(userData);
+        closeAllPopups();
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        closeAllPopups();
-      })
+      });
   }
 
 
@@ -101,13 +97,11 @@ function App() {
     api.patchAvatar(avatar)
       .then((avatar) => {
         setCurrentUser(avatar);
+        closeAllPopups();
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        closeAllPopups();
-      })
+      });
   }
 
   //открываем zoom-попап 
@@ -125,9 +119,9 @@ function App() {
     if (!isLiked) {
       console.log('лайк');
       api.putLike(card._id)
-      .then((newCard)=> {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      })
+        .then((newCard) => {
+          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        })
         //ловим вероятную ошибку
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -135,9 +129,9 @@ function App() {
     } else {
       console.log('дизлайк');
       api.deleteLike(card._id)
-      .then((newCard)=> {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      })
+        .then((newCard) => {
+          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        })
         //ловим вероятную ошибку
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -150,10 +144,14 @@ function App() {
     //console.log('удаляем карточку');
     //console.log(card);
     api.deleteCard(card._id)
-    .then(()=> {
-      setCards((state) => state.filter((c) => c._id !== card._id));
-    })
-    console.log(`удалили карточку ${card._id}`);
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== card._id));
+      })
+      //ловим вероятную ошибку
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+    //console.log(`удалили карточку ${card._id}`);
   }
 
   //закрываем попапы по крестику
