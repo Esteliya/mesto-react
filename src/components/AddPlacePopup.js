@@ -43,7 +43,8 @@ function AddPlacePopup(props) {
                 name="name"
                 placeholder="Название"
                 className="edit-form__personalia"
-                onChange={handleNameChange} />
+                onChange={handleNameChange} 
+                value={name}/>
             <span className="name-card-error edit-form__personalia-error" />
             <input
                 type="url"
@@ -52,7 +53,8 @@ function AddPlacePopup(props) {
                 name="link"
                 placeholder="Ссылка на картинку"
                 className="edit-form__personalia"
-                onChange={handleLinkChange} />
+                onChange={handleLinkChange} 
+                value={link}/>
             <span className="images-error edit-form__personalia-error" />
         </ PopupWithForm>
     )
